@@ -66,7 +66,7 @@ def main():
 
     # Separación e campo de lonxitude mínima de eslinga
     st.write(" ")
-    Lonxitude_min_Eslinga = st.number_input("Longixude mínima de eslinga", value=0.0, format="%.2f")
+    Lonxitude_min_Eslinga = st.number_input("Lonxitude mínima de eslinga", value=0.0, format="%.2f")
 
     if st.button("Calcular"):
         try:

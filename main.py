@@ -44,13 +44,13 @@ def main():
             col1, col2, col3 = st.columns(3)
             with col1:
                 st.write("X")
-                globals()[f'Orelleta_{i}_X'] = col1.number_input("", key=f'Orelleta {i} X', value=st.session_state[f'Orelleta {i} X'], format="%.2f", label_visibility="collapsed")
+                globals()[f'Orelleta_{i}_X'] = col1.number_input("", key=f'Orelleta {i} X', value=0.0, format="%.2f", label_visibility="collapsed")
             with col2:
                 st.write("Y")
-                globals()[f'Orelleta_{i}_Y'] = col2.number_input("", key=f'Orelleta {i} Y', value=st.session_state[f'Orelleta {i} Y'], format="%.2f", label_visibility="collapsed")
+                globals()[f'Orelleta_{i}_Y'] = col2.number_input("", key=f'Orelleta {i} Y', value=0.0, format="%.2f", label_visibility="collapsed")
             with col3:
                 st.write("Z")
-                globals()[f'Orelleta_{i}_Z'] = col3.number_input("", key=f'Orelleta {i} Z', value=st.session_state[f'Orelleta {i} Z'], format="%.2f", label_visibility="collapsed")
+                globals()[f'Orelleta_{i}_Z'] = col3.number_input("", key=f'Orelleta {i} Z', value=0.0, format="%.2f", label_visibility="collapsed")
 
     with st.expander("Coordenadas Centro de Gravidade"):
         col1, col2, col3 = st.columns(3)

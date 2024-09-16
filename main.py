@@ -1,6 +1,8 @@
 import streamlit as st
 from math import sqrt
 
+import streamlit.components.v1 as components #necesario para Google Analytics
+
 def calcular_op_z(orelleta_z, orelleta_x, orelleta_y, CdG_X, CdG_Y, Lonxitude_min_Eslinga):
     a = 1
     b = -2 * orelleta_z
@@ -17,6 +19,21 @@ def calcular_op_z(orelleta_z, orelleta_x, orelleta_y, CdG_X, CdG_Y, Lonxitude_mi
     return max(z1, z2)
 
 def main():
+##########################################################################################################
+        # Inyectar el script de Google Analytics al inicio de la aplicación
+    GA_TRACKING_ID = 'G-MCF1GFXETD'  # Reemplaza con tu ID de seguimiento de Google Analytics
+    ga_script = f"""
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={GA_TRACKING_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+      gtag('config', '{GA_TRACKING_ID}');
+    </script>
+    """
+    components.html(ga_script, height=0, width=0)  # Inyectar el script de seguimiento
+################################################################################    
     #st.title("Cálculos de Orelletas")
     st.title("Cálculos Diego")
 

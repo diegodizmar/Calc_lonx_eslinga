@@ -20,19 +20,30 @@ def calcular_op_z(orelleta_z, orelleta_x, orelleta_y, CdG_X, CdG_Y, Lonxitude_mi
 
 def main():
 ##########################################################################################################
-        # Inyectar el script de Google Analytics al inicio de la aplicación
-    GA_TRACKING_ID = 'G-MCF1GFXETD'  # Reemplaza con tu ID de seguimiento de Google Analytics
-    ga_script = f"""
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={GA_TRACKING_ID}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){{dataLayer.push(arguments);}}
-      gtag('js', new Date());
-      gtag('config', '{GA_TRACKING_ID}');
-    </script>
+    # Código de Google Tag Manager para insertar en el <head>
+    # Aunque no se pueda insertar en <head> directamente, lo dejamos aquí como referencia
+    gtm_head_script = """
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5SDBBFB5');</script>
+    <!-- End Google Tag Manager -->
     """
-    components.html(ga_script, height=0, width=0)  # Inyectar el script de seguimiento
+    # Código de Google Tag Manager (noscript) para insertar justo después de <body>
+    gtm_noscript = """
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SDBBFB5"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    """
+
+    # Insertar el código en el <body>
+    components.html(gtm_noscript, height=0, width=0, scrolling=False)
+
+    # Asegúrate de que el script de GTM sea cargado antes del contenido de la página
+    components.html(gtm_head_script, height=0, width=0, scrolling=False)
 ################################################################################    
     #st.title("Cálculos de Orelletas")
     st.title("Cálculos Diego")

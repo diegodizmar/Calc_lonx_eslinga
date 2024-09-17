@@ -196,9 +196,14 @@ def main():
                 xaxis_title='X',
                 yaxis_title='Y',
                 zaxis_title='Z'
-            ))
-
+#            ))
+             ),
+             width=800,  # Cambia el ancho
+             height=800  # Cambia el alto
+            )
             st.plotly_chart(fig)
+
+        
 ############
 
         except Exception as e:

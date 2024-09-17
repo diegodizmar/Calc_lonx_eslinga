@@ -1,7 +1,6 @@
 import streamlit as st
 from math import sqrt
-
-import streamlit.components.v1 as components #necesario para Google Analytics
+import plotly.graph_objects as go
 
 def calcular_op_z(orelleta_z, orelleta_x, orelleta_y, CdG_X, CdG_Y, Lonxitude_min_Eslinga):
     a = 1
@@ -19,9 +18,8 @@ def calcular_op_z(orelleta_z, orelleta_x, orelleta_y, CdG_X, CdG_Y, Lonxitude_mi
     return max(z1, z2)
 
 def main():
-################################################################################
-################################################################################    
-    #st.title("Cálculos de Orelletas")
+    ################################################################################
+    ################################################################################    
     st.title("Cálculos Diego")
 
     st.header("Cálculo de lonxitudes de eslingas, cubrir os seguintes datos")
@@ -118,39 +116,38 @@ def main():
                 sqrt((OP_4_X - st.session_state['Orelleta 4 X'])**2 + (OP_4_Y - st.session_state['Orelleta 4 Y'])**2 + (OP_4_Z - st.session_state['Orelleta 4 Z'])**2)
             ]
 
-            # Calcular o mínimo dos primeros elementos de cada lista
-            min_01 = min(OL_1[0], OL_2[0], OL_3[0], OL_4[0])
+            st.write("#### Resultados")
+            st.write(f"Longitud OL1: {OL_1}")
+            st.write(f"Longitud OL2: {OL_2}")
+            st.write(f"Longitud OL3: {OL_3}")
+            st.write(f"Longitud OL4: {OL_4}")
+            
+            # Visualización en 3D
+            fig = go.Figure(data=[go.Scatter3d(
+                x=[st.session_state[f'Orelleta {i} X'] for i in range(1, 5)],
+                y=[st.session_state[f'Orelleta {i} Y'] for i in range(1, 5)],
+                z=[st.session_state[f'Orelleta {i} Z'] for i in range(1, 5)],
+                mode='markers',
+                marker=dict(
+                    size=8,
+                    color=['red', 'green', 'blue', 'purple'],
+                    opacity=0.8
+                )
+            )])
 
-            # Determinar coord_o basado no valor mínimo
-            if min_01 == OL_1[0]:
-                coord_o_X, coord_o_Y, coord_o_Z = OP_1_X, OP_1_Y, OP_1_Z
-            elif min_01 == OL_2[0]:
-                coord_o_X, coord_o_Y, coord_o_Z = OP_2_X, OP_2_Y, OP_2_Z
-            elif min_01 == OL_3[0]:
-                coord_o_X, coord_o_Y, coord_o_Z = OP_3_X, OP_3_Y, OP_3_Z
-            else:
-                coord_o_X, coord_o_Y, coord_o_Z = OP_4_X, OP_4_Y, OP_4_Z
+            fig.update_layout(
+                title='Visualización en 3D de las Orelletas',
+                scene=dict(
+                    xaxis_title='X',
+                    yaxis_title='Y',
+                    zaxis_title='Z',
+                )
+            )
 
-            # Calcular lonxitudes
-            Lonx_eslinga_orelleta_1 = sqrt((coord_o_X - st.session_state['Orelleta 1 X'])**2 + (coord_o_Y - st.session_state['Orelleta 1 Y'])**2 + (coord_o_Z - st.session_state['Orelleta 1 Z'])**2)
-            Lonx_eslinga_orelleta_2 = sqrt((coord_o_X - st.session_state['Orelleta 2 X'])**2 + (coord_o_Y - st.session_state['Orelleta 2 Y'])**2 + (coord_o_Z - st.session_state['Orelleta 2 Z'])**2)
-            Lonx_eslinga_orelleta_3 = sqrt((coord_o_X - st.session_state['Orelleta 3 X'])**2 + (coord_o_Y - st.session_state['Orelleta 3 Y'])**2 + (coord_o_Z - st.session_state['Orelleta 3 Z'])**2)
-            Lonx_eslinga_orelleta_4 = sqrt((coord_o_X - st.session_state['Orelleta 4 X'])**2 + (coord_o_Y - st.session_state['Orelleta 4 Y'])**2 + (coord_o_Z - st.session_state['Orelleta 4 Z'])**2)
-
-            # Mostrar resultados de distancias con etiquetas en negrita se cumplen a condición
-            for i, lonx_eslinga in enumerate([Lonx_eslinga_orelleta_1, Lonx_eslinga_orelleta_2, Lonx_eslinga_orelleta_3, Lonx_eslinga_orelleta_4], start=1):
-                if round(lonx_eslinga, 2) == round(Lonxitude_min_Eslinga, 2):
-                    #st.success(f"**Lonx_eslinga_orelleta_{i}:** **{lonx_eslinga:.2f}**")
-                    st.success(f"**Lonxitude eslinga orelleta {i}:** **{lonx_eslinga:.2f}**")
-                else:
-                    #st.success(f"Lonx_eslinga_orelleta_{i}: {lonx_eslinga:.2f}")
-                    st.success(f"Lonxitude eslinga orelleta {i}: {lonx_eslinga:.2f}")
-
-            #st.success(f"Coordenadas de coord_o: X={coord_o_X:.2f}, Y={coord_o_Y:.2f}, Z={coord_o_Z:.2f}")
-            st.success(f"Coordenadas gancho (unión eslingas): X={coord_o_X:.2f}, Y={coord_o_Y:.2f}, Z={coord_o_Z:.2f}")
+            st.plotly_chart(fig)
 
         except Exception as e:
-            st.error(f"Ocorreu un erro: {e}")
+            st.error(f"Erro no cálculo: {str(e)}")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
